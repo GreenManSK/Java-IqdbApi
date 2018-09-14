@@ -32,6 +32,14 @@ public enum ServiceType {
     }
 
     /**
+     * Get service domain
+     * @return domain
+     */
+    public String getDomain() {
+        return domain;
+    }
+
+    /**
      * Detects service type by url
      *
      * @param url Image url
