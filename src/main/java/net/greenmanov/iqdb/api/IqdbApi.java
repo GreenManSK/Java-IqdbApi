@@ -115,6 +115,7 @@ public class IqdbApi implements IIqdbApi {
 
     protected List<Match> parseHtml(String html) {
         Document dom = Jsoup.parse(html);
+        dom.setBaseUri(IIqdbApi.URL);
         Element pageContainer = dom.getElementById(CONTAINER_ID);
         Elements matches = pageContainer.getElementsByTag("div");
         ArrayList<Match> result = new ArrayList<>();
