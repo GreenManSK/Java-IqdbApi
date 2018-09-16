@@ -43,7 +43,7 @@ public class DynamicParser implements IParser {
                 innerParser = new GelbooruParser();
                 break;
             case SANKAKU_CHANNEL:
-                new SankakuChannelParser();
+                innerParser = new SankakuChannelParser();
                 break;
             case E_SHUUSHUU:
                 innerParser = new EShuusshuuParser();
