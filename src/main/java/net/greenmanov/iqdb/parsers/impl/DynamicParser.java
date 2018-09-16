@@ -68,6 +68,7 @@ public class DynamicParser implements IParser {
      */
     @Override
     public List<Tag> getTags() throws IllegalStateException {
+        checkParser();
         return innerParser.getTags();
     }
 
@@ -79,6 +80,7 @@ public class DynamicParser implements IParser {
      */
     @Override
     public String getImage() throws IllegalStateException {
+        checkParser();
         return innerParser.getImage();
     }
 
@@ -90,6 +92,7 @@ public class DynamicParser implements IParser {
      */
     @Override
     public String getSource() throws IllegalStateException {
+        checkParser();
         return innerParser.getSource();
     }
 

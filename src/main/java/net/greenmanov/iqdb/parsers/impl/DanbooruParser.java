@@ -102,7 +102,7 @@ public class DanbooruParser extends AJsoupParseer {
         checkParseCall();
         Elements infoRows = dom.getElementById(INFO_SECTION_ID).getElementsByTag("li");
         for (Element row : infoRows) {
-            if (row.text().contains("Size")) {
+            if (row.text().contains("Size") && !row.getElementsByTag("a").isEmpty()) {
                 return row.getElementsByTag("a").first().attr("abs:href");
             }
         }
@@ -120,7 +120,7 @@ public class DanbooruParser extends AJsoupParseer {
         checkParseCall();
         Elements infoRows = dom.getElementById(INFO_SECTION_ID).getElementsByTag("li");
         for (Element row : infoRows) {
-            if (row.text().contains("Source")) {
+            if (row.text().contains("Source") && !row.getElementsByTag("a").isEmpty()) {
                 return row.getElementsByTag("a").first().attr("abs:href");
             }
         }
