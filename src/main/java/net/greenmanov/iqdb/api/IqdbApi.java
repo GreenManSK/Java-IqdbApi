@@ -126,7 +126,7 @@ public class IqdbApi implements IIqdbApi {
             int similarity = Integer.valueOf(extract(rows.get(SIMILARITY_ROW).text(), SIMILARITY_REGEX));
             int width = Integer.valueOf(extract(rows.get(SIZE_ROW).text(), WIDTH_REGEX));
             int height = Integer.valueOf(extract(rows.get(SIZE_ROW).text(), HEIGHT_REGEX));
-            String url = rows.get(IMAGE_ROW).getElementsByTag("a").first().attr("href");
+            String url = rows.get(IMAGE_ROW).getElementsByTag("a").first().attr("abs:href");
             ServiceType type = ServiceType.getTypeByUrl(url);
             result.add(new Match(similarity, width, height, type, url));
         }
