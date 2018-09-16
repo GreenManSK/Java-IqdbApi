@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,7 +27,11 @@ public class KonachanParser extends AMoebooruParser {
     public List<Tag> getTags() throws IllegalStateException {
         checkParseCall();
         List<Tag> result = new ArrayList<>();
-        Elements tags = dom.select(TAG_CONTAINER_SELECTOR).first().getElementsByTag("li");
+        Elements tagContainer = dom.select(TAG_CONTAINER_SELECTOR);
+        if (tagContainer.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Elements tags = tagContainer.first().getElementsByTag("li");
         for (Element tag : tags) {
             result.add(new Tag(getTagType(tag.attr("data-type")), tag.attr("data-name")));
         }

@@ -74,6 +74,9 @@ public class GelbooruParser extends AJsoupParseer {
     @Override
     public String getSource() throws IllegalStateException {
         checkParseCall();
-        return dom.select(SOURCE_SELECTOR).first().getElementsByTag("a").first().attr("abs:href");
+        Elements element = dom.select(SOURCE_SELECTOR);
+        if (element.isEmpty())
+            return null;
+        return element.first().getElementsByTag("a").first().attr("abs:href");
     }
 }
