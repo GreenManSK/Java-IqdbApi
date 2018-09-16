@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,8 +57,11 @@ public class DanbooruParser extends AJsoupParseer {
      * @return List of all tags from the container
      */
     protected List<Tag> getTags(String sectionClass, TagType type) {
+        Elements section = dom.select("ul." + sectionClass);
+        if (section.size() == 0)
+            return Collections.emptyList();
         List<Tag> tags = new ArrayList<>();
-        Elements tagContainers = dom.select("ul." + sectionClass).first().getElementsByTag("li");
+        Elements tagContainers = section.first().getElementsByTag("li");
         for (Element container: tagContainers) {
             String tagName = container.getElementsByClass(TAG_NAME_ELEMENT_CLASS).first().text();
             tags.add(new Tag(type, tagName));

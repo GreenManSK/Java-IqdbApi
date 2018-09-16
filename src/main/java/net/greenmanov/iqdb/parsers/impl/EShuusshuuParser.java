@@ -3,8 +3,10 @@ package net.greenmanov.iqdb.parsers.impl;
 import net.greenmanov.iqdb.parsers.AJsoupParseer;
 import net.greenmanov.iqdb.parsers.Tag;
 import net.greenmanov.iqdb.parsers.TagType;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +40,11 @@ public class EShuusshuuParser extends AJsoupParseer {
      * @return List of tags
      */
     protected List<Tag> getTags(String name, TagType type) {
-        return dom.select("dt:contains(" + name + ":)").first().nextElementSibling().getElementsByTag("a")
+        Elements tagContainer = dom.select("dt:contains(" + name + ":)");
+        if (tagContainer.size() == 0) {
+            return Collections.emptyList();
+        }
+        return tagContainer.first().nextElementSibling().getElementsByTag("a")
                 .stream().map(e -> new Tag(type, e.text())).collect(Collectors.toList());
     }
 
