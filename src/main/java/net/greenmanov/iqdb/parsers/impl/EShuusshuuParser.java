@@ -57,7 +57,10 @@ public class EShuusshuuParser extends AJsoupParseer {
     @Override
     public String getImage() throws IllegalStateException {
         checkParseCall();
-        return dom.select(IMAGE_LINK_SELECTOR).first().attr("abs:href");
+
+        final String[] href = {null};
+        onFirst(dom.select(IMAGE_LINK_SELECTOR), e -> href[0] = e.attr("abs:href"));
+        return href[0];
     }
 
     /**

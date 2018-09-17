@@ -68,7 +68,11 @@ public class SankakuChannelParser extends AJsoupParseer {
     @Override
     public String getImage() throws IllegalStateException {
         checkParseCall();
-        return dom.select(IMAGE_LINK_SELECTOR).first().getElementsByTag("a").attr("abs:href");
+        final String[] href = {null};
+        onFirst(dom.select(IMAGE_LINK_SELECTOR), e -> {
+            onFirst(e.getElementsByTag("a"), e2 -> href[0] = e2.attr("abs:href"));
+        });
+        return href[0];
     }
 
     /**

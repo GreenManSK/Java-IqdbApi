@@ -29,6 +29,8 @@ public class ZerochanParser extends AJsoupParseer {
         List<Tag> result = new ArrayList<>();
         Elements tags = dom.select(TAGS_SELECTOR);
         for (Element tag : tags) {
+            if (tag.getElementsByTag("a").isEmpty())
+                continue;
             result.add(new Tag(getTagType(tag), tag.getElementsByTag("a").first().text()));
         }
         return result;
@@ -71,7 +73,9 @@ public class ZerochanParser extends AJsoupParseer {
     @Override
     public String getImage() throws IllegalStateException {
         checkParseCall();
-        return dom.select(IMAGE_LINK_SELECTOR).first().attr("abs:href");
+        final String[] href = {null};
+        onFirst(dom.select(IMAGE_LINK_SELECTOR), e -> href[0] = e.attr("abs:href"));
+        return href[0];
     }
 
     /**

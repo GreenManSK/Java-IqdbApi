@@ -44,7 +44,9 @@ abstract public class AMoebooruParser extends AJsoupParseer {
         Elements infoRows = dom.getElementById(STAST_CONTAINER_ID).getElementsByTag("li");
         for (Element row : infoRows) {
             if (row.text().contains("Source") && !row.getElementsByTag("a").isEmpty()) {
-                return row.getElementsByTag("a").first().attr("abs:href");
+                final String[] href = {null};
+                onFirst(row.getElementsByTag("a"), e -> href[0] = e.attr("abs:href"));
+                return href[0];
             }
         }
         return null;

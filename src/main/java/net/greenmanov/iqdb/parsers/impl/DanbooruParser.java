@@ -63,6 +63,8 @@ public class DanbooruParser extends AJsoupParseer {
         List<Tag> tags = new ArrayList<>();
         Elements tagContainers = section.first().getElementsByTag("li");
         for (Element container: tagContainers) {
+            if (container.getElementsByClass(TAG_NAME_ELEMENT_CLASS).isEmpty())
+                continue;
             String tagName = container.getElementsByClass(TAG_NAME_ELEMENT_CLASS).first().text();
             tags.add(new Tag(type, tagName));
         }
@@ -103,7 +105,9 @@ public class DanbooruParser extends AJsoupParseer {
         Elements infoRows = dom.getElementById(INFO_SECTION_ID).getElementsByTag("li");
         for (Element row : infoRows) {
             if (row.text().contains("Size") && !row.getElementsByTag("a").isEmpty()) {
-                return row.getElementsByTag("a").first().attr("abs:href");
+                final String[] href = {null};
+                onFirst(row.getElementsByTag("a"), e -> href[0] = e.attr("abs:href"));
+                return href[0];
             }
         }
         return null;
@@ -121,7 +125,9 @@ public class DanbooruParser extends AJsoupParseer {
         Elements infoRows = dom.getElementById(INFO_SECTION_ID).getElementsByTag("li");
         for (Element row : infoRows) {
             if (row.text().contains("Source") && !row.getElementsByTag("a").isEmpty()) {
-                return row.getElementsByTag("a").first().attr("abs:href");
+                final String[] href = {null};
+                onFirst(row.getElementsByTag("a"), e -> href[0] = e.attr("abs:href"));
+                return href[0];
             }
         }
         return null;

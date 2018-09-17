@@ -2,6 +2,8 @@ package net.greenmanov.iqdb.parsers;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
@@ -37,5 +39,21 @@ abstract public class AJsoupParseer implements IParser {
         if (dom == null) {
             throw new IllegalStateException("Need to call parse() function on this object before using getters");
         }
+    }
+
+    /**
+     * Call function on first element of this list if one exists
+     * @param elements List of elements
+     * @param callback Callback function
+     */
+    protected void onFirst(Elements elements, FirstCallback callback) {
+        if (elements.isEmpty())
+            return;
+        callback.call(elements.first());
+    }
+
+    @FunctionalInterface
+    protected interface FirstCallback {
+        void call(Element element);
     }
 }
