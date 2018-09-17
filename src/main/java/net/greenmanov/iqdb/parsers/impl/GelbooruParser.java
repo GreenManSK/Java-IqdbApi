@@ -83,6 +83,8 @@ public class GelbooruParser extends AJsoupParseer {
         Elements element = dom.select(SOURCE_SELECTOR);
         if (element.isEmpty())
             return null;
-        return element.first().getElementsByTag("a").first().attr("abs:href");
+        final String[] href = {null};
+        onFirst(element.first().getElementsByTag("a"), e -> href[0] = e.attr("abs:href"));
+        return href[0];
     }
 }
