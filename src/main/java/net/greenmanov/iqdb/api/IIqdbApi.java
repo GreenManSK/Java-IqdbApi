@@ -8,6 +8,10 @@ import java.util.List;
  * Interface of java api for iqdb image matching
  */
 public interface IIqdbApi {
+    int MAX_FILE_SIZE = 8388608;
+    int MAX_IMAGE_WIDTH = 7500;
+    int MAX_IMAGE_HEIGHT = 7500;
+
     String URL = "https://iqdb.org/";
     String FILED_SERVICE = "service[]";
     String FIELD_FILE = "file";
@@ -22,8 +26,9 @@ public interface IIqdbApi {
      * @param options Form options
      * @return List sorted from most similar to least similar match
      * @throws IOException On problem with getting response from server
+     * @throws FileSizeLimitException If file size is larger than allowed by iqdb
      */
-    List<Match> searchFile(File file, Options options) throws IOException;
+    List<Match> searchFile(File file, Options options) throws IOException, FileSizeLimitException;
 
     /**
      * Search image from url on the iqdb and return sorted list of matches

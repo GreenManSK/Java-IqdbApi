@@ -69,8 +69,13 @@ public class IqdbApi implements IIqdbApi {
      * @param options Form options
      * @return List sorted from most similar to least similar match
      * @throws IOException On problem with getting response from server
+     * @throws FileSizeLimitException If file size is larger than allowed by iqdb
      */
-    public List<Match> searchFile(File file, Options options) throws IOException {
+    public List<Match> searchFile(File file, Options options) throws IOException, FileSizeLimitException {
+        if (file.length() > MAX_FILE_SIZE) {
+            throw new FileSizeLimitException("File size " + file.length() + "bytes of " + file + " is too large for " +
+                    "iqdb");
+        }
         MultipartEntityBuilder builder = createEntityBuilder();
         builder.addPart(IIqdbApi.FIELD_FILE, new FileBody(file));
         return search(builder, options);
